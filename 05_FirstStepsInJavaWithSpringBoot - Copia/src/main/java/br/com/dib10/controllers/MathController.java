@@ -15,6 +15,29 @@ public class MathController {
         return  convertToDouble(numberTwo) + convertToDouble(numberOne);
     }
 
+    @RequestMapping("/subtraction/{numberOne}/{numberTwo}")
+    public Double subtraction(@PathVariable("numberOne") String numberOne, @PathVariable ("numberTwo") String numberTwo) throws Exception {
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
+        return  convertToDouble(numberOne) - convertToDouble(numberTwo);
+    }
+    @RequestMapping("/multiplication/{numberOne}/{numberTwo}") // multiplication
+    public Double multiplication(@PathVariable("numberOne") String numberOne, @PathVariable ("numberTwo") String numberTwo) throws Exception {
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
+        return  convertToDouble(numberOne) * convertToDouble(numberTwo);
+    }
+    @RequestMapping("/division/{numberOne}/{numberTwo}")
+    public Double division(@PathVariable("numberOne") String numberOne, @PathVariable ("numberTwo") String numberTwo) throws Exception {
+        if(!isNumeric(numberOne) || !isNumeric(numberTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");
+        return convertToDouble(numberOne) / convertToDouble(numberTwo);
+    }
+    @RequestMapping("/squareroot/{numberOne}") // square root
+    public double squareroot(@PathVariable("numberOne") String numberOne) throws Exception {
+        if(!isNumeric(numberOne)) throw new UnsupportedMathOperationException("Please set a numeric value");
+        return Math.sqrt(convertToDouble(numberOne));
+    }
+
+
+
     private Double convertToDouble(String strNumber)  throws IllegalArgumentException {
         if(strNumber ==null || strNumber.isEmpty())throw new UnsupportedMathOperationException("Please set a numeric value") ;
 
@@ -24,7 +47,7 @@ public class MathController {
     }
 
     private boolean isNumeric(String strNumber) {
-        if(strNumber ==null || strNumber.isEmpty()) return false;
+        if(strNumber ==null || strNumber.isEmpty()) return false; //verifica se é nulo ou vazio
 
         String number = strNumber.replace(",", ".");
         return  (number.matches("[-+]?[0-9]*\\.?[0-9]+")) ;
